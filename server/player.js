@@ -97,7 +97,7 @@ function Player() {
         if(lvl_diff > 0) {
             gained_exp = (data.exp*lvl_diff);
         }
-        var exp = parseInt(this.experience)*parseInt(gainex_exp);
+        var exp = parseInt(this.experience)*parseInt(gained_exp);
         this.experience = exp;
         console.log("* Player "+this.name+" gained "+ gained_exp + " NOW: "+this.experience);
         this.kills++;
