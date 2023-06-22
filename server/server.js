@@ -614,23 +614,22 @@ function Register(data) {
             if(rows.length > 0 ) {
                 s.emit("register_error", {error: "Player or email already taken."});
             } else {
-                db.run('BEGIN');
                 db.run(
                     'INSERT INTO players (name, password, email, level, health, power, experience, kills, deaths, created, last_login) VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?, current_timestamp, current_timestamp)',
-                    [data.name, data.password, data.email, 1, 100, 1, 0, 0, 0 ]
-                );
-                db.run('COMMIT');
-                db.lastID("players", function(id) {
-                    var player = new Player.Player();
-                    player.CreateNew(data, world, id);
-                    player.CheckLevelUp(0,0,1);
-                    s.player = player;
+                    [data.name, data.password, data.email, 1, 100, 1, 0, 0, 0 ],
+                    function (err, rows) {
+                        var id = this.lastID;
+                        var player = new Player.Player();
+                        player.CreateNew(data, world, id);
+                        player.CheckLevelUp(0,0,1);
+                        s.player = player;
 
-                    sockets.push(s);
-                    players[player.id] = player;
-                    s.emit("SpawnPlayer", { player: player });
-                    s.broadcast.emit("AddPlayer", { player: player});
-                });
+                        sockets.push(s);
+                        players[player.id] = player;
+                        s.emit("SpawnPlayer", { player: player });
+                        s.broadcast.emit("AddPlayer", { player: player});
+                    }
+                );
             }
         }
     );
