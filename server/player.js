@@ -66,7 +66,7 @@ function Player() {
 
         if(levelup) {
             this.level++;
-            dbh.query(
+            dbh.run(
                 'update players set level = level+1, health = health+10 where id = ?',
                 [this.id]);
 
@@ -104,7 +104,7 @@ function Player() {
 
         this.CheckLevelUp(data, dbh);
 
-        dbh.query(
+        dbh.run(
             'update players set kills = kills + 1, experience = experience + ? where id = ?',
             [gained_exp, this.id]);
 
@@ -117,7 +117,7 @@ function Player() {
         this.spell = undefined;
         this.spells.length = 0;
 
-        dbh.query(
+        dbh.run(
             'update players set deaths = deaths + 1 where id = ?',
             [this.id]);
     };
