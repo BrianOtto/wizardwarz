@@ -664,14 +664,19 @@ function Tower() {
     Object3D.call(this);
     
     Tower.prototype.Create = function(x, y, z, scale) {
-	var object = modelLoader.GetModel("watchtower");
-	object.position.set(x,y,z);
-	object.rotation.set(0, Math.random()*Math.PI, 0);
-	object.scale.set(scale, scale, scale);
-	scene.add(object);
+        var object = modelLoader.GetModel("watchtower");
+        
+        if (Object.keys(object).length) {
+        	object.position.set(x,y,z);
+        	object.rotation.set(0, Math.random()*Math.PI, 0);
+        	object.scale.set(scale, scale, scale);
+        	
+        	scene.add(object);
+        }
     };
 
 }
+
 Tower.prototype = new Object3D();
 Tower.prototype.constructor = Tower;
 
@@ -682,14 +687,19 @@ function MarketHouse() {
     Object3D.call(this);
     
     MarketHouse.prototype.Create = function(x, y, z, scale) {
-	var object = modelLoader.GetModel("markethouse");
-	object.position.set(x,y,z);
-	object.rotation.set(0, Math.random()*Math.PI, 0);
-	object.scale.set(scale, scale, scale);
-	scene.add(object);
+        var object = modelLoader.GetModel("markethouse");
+        
+        if (Object.keys(object).length) {
+        	object.position.set(x,y,z);
+        	object.rotation.set(0, Math.random()*Math.PI, 0);
+        	object.scale.set(scale, scale, scale);
+        	
+        	scene.add(object);
+        }
     };
 
 }
+
 MarketHouse.prototype = new Object3D();
 MarketHouse.prototype.constructor = MarketHouse;
 
@@ -700,14 +710,19 @@ function DockHouse() {
     Object3D.call(this);
     
     DockHouse.prototype.Create = function(x, y, z, scale) {
-	var object = modelLoader.GetModel("dockhouse");
-	object.position.set(x,y,z);
-	object.rotation.set(0, Math.random()*Math.PI, 0);
-	object.scale.set(scale, scale, scale);
-	scene.add(object);
+        var object = modelLoader.GetModel("dockhouse");
+        
+        if (Object.keys(object).length) {
+        	object.position.set(x,y,z);
+        	object.rotation.set(0, Math.random()*Math.PI, 0);
+        	object.scale.set(scale, scale, scale);
+        	
+        	scene.add(object);
+        }
     };
 
 }
+
 DockHouse.prototype = new Object3D();
 DockHouse.prototype.constructor = DockHouse;
 
@@ -718,20 +733,25 @@ function RoadHouse() {
     Object3D.call(this);
     
     RoadHouse.prototype.Create = function(x, y, z, scale) {
-	var object = modelLoader.GetModel("roadhouse");
-	this.mesh = object;
-	CreateBoundingBox(this);
-	console.log("WIDTH: "+200*this.bsize_x);
-	object.position.set(x-(this.bsize_x*scale),y,z+(this.bsize_z*scale));
-	object.rotation.set(0, Math.random()*Math.PI, 0);
-	object.scale.set(scale, scale, scale);
-	scene.add(object);
+        var object = modelLoader.GetModel("roadhouse");
+        
+        if (Object.keys(object).length) {
+        	this.mesh = object;
+        	
+        	CreateBoundingBox(this);
+        	
+        	object.position.set(x-(this.bsize_x*scale),y,z+(this.bsize_z*scale));
+        	object.rotation.set(0, Math.random()*Math.PI, 0);
+        	object.scale.set(scale, scale, scale);
+        	
+        	scene.add(object);
+        }
     };
 
 }
+
 RoadHouse.prototype = new Object3D();
 RoadHouse.prototype.constructor = RoadHouse;
-
 
 /////////////////////////////////////////////////////////////
 // Lamp
@@ -740,14 +760,19 @@ function Lamp() {
     Object3D.call(this);
     
     Lamp.prototype.Create = function(x, y, z, scale) {
-	var object = modelLoader.GetModel("lamp");
-	object.position.set(x,y,z);
-	object.rotation.set(0, Math.random()*Math.PI, 0);
-	object.scale.set(scale, scale, scale);
-	scene.add(object);
+        var object = modelLoader.GetModel("lamp");
+        
+        if (Object.keys(object).length) {
+        	object.position.set(x,y,z);
+        	object.rotation.set(0, Math.random()*Math.PI, 0);
+        	object.scale.set(scale, scale, scale);
+        	
+        	scene.add(object);
+        }
     };
 
 }
+
 Lamp.prototype = new Object3D();
 Lamp.prototype.constructor = Lamp;
 
@@ -758,14 +783,19 @@ function Flower() {
     Object3D.call(this);
     
     Flower.prototype.Create = function(x, y, z, scale, type) {
-	var object = modelLoader.GetModel('flower'+type);
-	object.position.set(x,y,z);
-	object.rotation.set(0, Math.random()*Math.PI, 0);
-	object.scale.set(scale, scale, scale);
-	scene.add(object);
+        var object = modelLoader.GetModel('flower'+type);
+        
+        if (Object.keys(object).length) {
+        	object.position.set(x,y,z);
+        	object.rotation.set(0, Math.random()*Math.PI, 0);
+        	object.scale.set(scale, scale, scale);
+        	
+        	scene.add(object);
+        }
     };
 
 }
+
 Flower.prototype = new Object3D();
 Flower.prototype.constructor = Flower;
 
