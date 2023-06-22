@@ -23,8 +23,7 @@ const db = new sqlite3.Database('database.db');
 //db.run('CREATE TABLE players (id INTEGER PRIMARY KEY, name VARCHAR(255), password VARCHAR(255), email VARCHAR(255), level INT, health INT, power INT, experience INT, kills INT, deaths INT, playtime INT, created VARCHAR(25), last_login VARCHAR(25))');
 
 server = server.createServer(Handler);
-// allow CORS from anywhere
-var io = require("socket.io")(server, { cors: { origin: '*' } });
+var io = require("socket.io")(server);
 io = io.sockets.on("connection", SocketHandler);
 var fs = require("fs");
 var path = require("path");
