@@ -23,7 +23,7 @@ const db = new sqlite3.Database('database.db');
 //db.run('CREATE TABLE players (id INTEGER PRIMARY KEY, name VARCHAR(255), password VARCHAR(255), email VARCHAR(255), level INT, health INT, power INT, experience INT, kills INT, deaths INT, playtime INT, created VARCHAR(25), last_login VARCHAR(25))');
 
 server = server.createServer(Handler);
-var io = require("socket.io").listen(server).set('log level',1);
+var io = require("socket.io")(server);
 io = io.sockets.on("connection", SocketHandler);
 var fs = require("fs");
 var path = require("path");
@@ -659,7 +659,7 @@ function Handler(req, res)
         file = "../index.html";
     }
     var name = path.extname(file);
-    var contentType;
+    var contentType = '';
     switch(name) {
         case '.html':
             case '.htm':
@@ -681,11 +681,21 @@ function Handler(req, res)
     fs.exists(file, function(exists) {
         if(exists) {
             fs.readFile(file,function(err,data) {
-                res.writeHead(200, {'Content-Type': contentType});
+                if (contentType != '') {
+                    res.writeHead(200, {'Content-Type': contentType});
+                } else {
+                    res.writeHead(200);
+                }
+                
                 res.end(data);
             });
         } else {
-            res.writeHead(404, {'Content-Type': contentType});
+            if (contentType != '') {
+                res.writeHead(404, {'Content-Type': contentType});
+            } else {
+                res.writeHead(404);
+            }
+            
             res.end("Wizard killed the requested file with a Fireball! R.I.P "+file);
         }
     });
