@@ -419,13 +419,13 @@ function GetGlobalRanking() {
         function (err, rows) {
             var data = [];
             for(var i = 0 ; i < rows.length; i++) {
-                data.push({name: rows[i][0],
-                          level: rows[i][1],
-                          health: rows[i][2],
-                          power: rows[i][3],
-                          exp: rows[i][4],
-                          kills: rows[i][5],
-                          deaths: rows[i][6],
+                data.push({name: rows[i].name,
+                          level: rows[i].level,
+                          health: rows[i].health,
+                          power: rows[i].power,
+                          exp: rows[i].experience,
+                          kills: rows[i].kills,
+                          deaths: rows[i].deaths,
                 });
             }
             s.emit("GlobalRanking", { ranking: data });
@@ -565,11 +565,10 @@ function Login(data) {
         function (err, rows) {
             if(rows.length > 0) {
                 var player = new Player.Player();
-                player.CreateNew(data, world, rows[0][1]);
-                console.log(rows);
-                player.max_health = rows[0][2];
-                player.level = rows[0][3];
-                player.experience = rows[0][4];
+                player.CreateNew(data, world, rows[0].id);
+                player.max_health = rows[0].health;
+                player.level = rows[0].level;
+                player.experience = rows[0].experience;
                 player.CheckLevelUp(0,0,1); // only update next level exp
                 s.player = player;
                 sockets.push(s);
