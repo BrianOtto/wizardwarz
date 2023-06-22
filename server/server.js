@@ -16,11 +16,11 @@ var port = 8080;
 // Initialization
 //======================================================
 var server = require("http");
-var dblite = require('dblite');
-var db = dblite('database.db');
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('database.db');
 
 // Create database
-//db.query('CREATE TABLE players (id INTEGER PRIMARY KEY, name VARCHAR(255), password VARCHAR(255), email VARCHAR(255), level INT, health INT, power INT, experience INT, kills INT, deaths INT, playtime INT, created VARCHAR(25), last_login VARCHAR(25))');
+//db.run('CREATE TABLE players (id INTEGER PRIMARY KEY, name VARCHAR(255), password VARCHAR(255), email VARCHAR(255), level INT, health INT, power INT, experience INT, kills INT, deaths INT, playtime INT, created VARCHAR(25), last_login VARCHAR(25))');
 
 server = server.createServer(Handler);
 var io = require("socket.io").listen(server).set('log level',1);
@@ -414,10 +414,10 @@ function ScoreBoard(data) {
 // Get global ranking
 function GetGlobalRanking() {
     var s = this;
-    db.query(
+    db.all(
         'SELECT name,level,health,power,experience,kills,deaths FROM players WHERE id > ? order by level desc',
         [0],
-        function (rows) {
+        function (err, rows) {
             var data = [];
             for(var i = 0 ; i < rows.length; i++) {
                 data.push({name: rows[i][0],
@@ -560,10 +560,10 @@ function ChangeSpell(data) {
 function Login(data) {
     logger.log("Player login: "+data.name);
     var s = this;
-    db.query(
+    db.all(
         'SELECT name,id, health, level,experience FROM players where name = ? and password = ?',
         [data.name, data.password],
-        function (rows) {
+        function (err, rows) {
             if(rows.length > 0) {
                 var player = new Player.Player();
                 player.CreateNew(data, world, rows[0][1]);
@@ -609,20 +609,20 @@ function Register(data) {
         return;
     } 
     var s = this;
-    db.query(
+    db.all(
         'SELECT name,id FROM players where name = ? or email = ?',
         [data.name, data.email],
-        function (rows) {
+        function (err, rows) {
             if(rows.length > 0 ) {
                 s.emit("register_error", {error: "Player or email already taken."});
             } else {
-                db.query('BEGIN');
-                db.query(
+                db.run('BEGIN');
+                db.run(
                     'INSERT INTO players (name, password, email, level, health, power, experience, kills, deaths, created, last_login) VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?, current_timestamp, current_timestamp)',
                     [data.name, data.password, data.email, 1, 100, 1, 0, 0, 0 ]
                 );
-                db.query('COMMIT');
-                db.lastRowID("players", function(id) {
+                db.run('COMMIT');
+                db.lastID("players", function(id) {
                     var player = new Player.Player();
                     player.CreateNew(data, world, id);
                     player.CheckLevelUp(0,0,1);
