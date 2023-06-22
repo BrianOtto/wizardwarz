@@ -590,15 +590,19 @@ function LocalPlayer() {
 
         // collision items/mob check
         this.collision_time += delta;
-        if(this.collision_time >= 0.2) {
+        
+        if (this.collision_time >= 0.2) {
             // water fog in 1st person view
-            if(this.mesh.position.y - this.y_offset <= 20 && this.view == 1) {
-                this.shadePlane.material.visible = true;
-                this.shadePlane.material.opacity = 0.7;
-            } else {
-                this.shadePlane.material.opacity = 0.0;
-                this.shadePlane.material.visible = false;
+            if (this.shadePlane) {
+                if (this.mesh.position.y - this.y_offset <= 20 && this.view == 1) {
+                    this.shadePlane.material.visible = true;
+                    this.shadePlane.material.opacity = 0.7;
+                } else {
+                    this.shadePlane.material.opacity = 0.0;
+                    this.shadePlane.material.visible = false;
+                }
             }
+            
             this.CheckCollision();
             this.collision_time = 0;
         }
