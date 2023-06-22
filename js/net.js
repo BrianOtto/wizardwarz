@@ -191,7 +191,7 @@ function Net() {
         this.socket.on("UpdatePlayerPosition", this.recv_UpdatePlayerPosition.bind(this));
         var s = this.socket;
         setInterval(function() {
-            if(!s.socket.connected) {
+            if(!s.connected) {
                 ConsoleMsg("[ERROR] Connection to server lost. Please reload the page.", "#FF0000");
             }	
         }, 5000);
