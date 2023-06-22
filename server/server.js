@@ -28,7 +28,6 @@ io = io.sockets.on("connection", SocketHandler);
 var fs = require("fs");
 var path = require("path");
 var logger = require('util');
-var sys = require('sys');
 server.listen(port);
 
 console.log("===================================");
@@ -662,21 +661,27 @@ function Handler(req, res)
     var contentType = '';
     switch(name) {
         case '.html':
-            case '.htm':
+        case '.htm':
             contentType = 'text/html';
-        break;
+            break;
         case '.js':
             contentType = 'text/javascript';
-        break;
+            break;
         case '.css':
             contentType = 'text/css';
-        break;
+            break;
         case '.png':
             contentType = 'image/png';
-        break;
+            break;
         case '.jpg':
             contentType = 'image/jpg';
-        break;
+            break;
+        case '.obj':
+            contentType = 'text/plain';
+            break;
+        case '.mtl':
+            contentType = 'text/plain';
+            break;
     }
     fs.exists(file, function(exists) {
         if(exists) {
