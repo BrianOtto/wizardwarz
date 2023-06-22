@@ -97,6 +97,8 @@ function ModelLoader() {
     this.models = new Array();
 
     ModelLoader.prototype.GetModel = function(name) {
+        if (!name || !this.models[name] || !this.models[name].mesh) { return {} }
+        
         if(this.models[name].mesh.clone == undefined) {
             return this.models[name].mesh;
         } else {
